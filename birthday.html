@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happy Birthday 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --pink-light: #ffd1e8;
+        --pink: #ff8ac9;
+        --pink-dark: #ff4b9b;
+        --bg: #1a0013;
+        --text-main: #fff5fb;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(
+          circle at top,
+          #ffb3da 0,
+          #ff5fa8 30%,
+          #2b001e 80%
+        );
+        color: var(--text-main);
+        overflow: hidden;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 255, 255, 0.07) 0,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(255, 255, 255, 0.06) 0,
+            transparent 50%
+          );
+        mix-blend-mode: screen;
+        opacity: 0.5;
+      }
+
+      .card {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        width: 95%;
+        background: rgba(26, 0, 19, 0.8);
+        border-radius: 24px;
+        padding: 32px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7),
+          0 0 60px rgba(255, 100, 180, 0.4);
+        backdrop-filter: blur(16px);
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+        gap: 24px;
+      }
+
+      @media (max-width: 720px) {
+        .card {
+          grid-template-columns: 1fr;
+          padding: 24px 16px;
+        }
+      }
+
+      .ascii-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 20px;
+        padding: 16px;
+        background: radial-gradient(
+          circle at top,
+          rgba(255, 244, 254, 0.2),
+          transparent 70%
+        );
+        border: 1px dashed rgba(255, 182, 215, 0.6);
+      }
+
+      .ascii-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #ffd7f0;
+        margin-bottom: 6px;
+      }
+
+      .ascii-heart {
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        line-height: 1.1;
+        white-space: pre;
+        color: #ffe2f2;
+        text-shadow: 0 0 6px rgba(255, 153, 204, 0.8),
+          0 0 16px rgba(255, 80, 150, 0.9);
+        margin-bottom: 8px;
+      }
+
+      .ascii-caption {
+        font-size: 0.85rem;
+        color: #ffd7f0;
+        opacity: 0.9;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        justify-content: center;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(255, 182, 215, 0.1);
+        border: 1px solid rgba(255, 182, 215, 0.5);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ffd1e8;
+        align-self: flex-start;
+      }
+
+      .tag-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--pink);
+        box-shadow: 0 0 8px rgba(255, 138, 201, 0.9);
+      }
+
+      h1 {
+        font-size: clamp(1.9rem, 3vw, 2.3rem);
+        line-height: 1.15;
+      }
+
+      h1 span.name {
+        background: linear-gradient(120deg, #ffe6f3, #ffb3da, #ffe6f3);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 18px rgba(255, 140, 200, 0.6);
+        font-weight: 800;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+        color: #ffd7f0;
+        opacity: 0.9;
+      }
+
+      .message {
+        position: relative;
+        padding: 12px 16px 14px 16px;
+        border-radius: 16px;
+        background: rgba(10, 0, 6, 0.6);
+        border: 1px solid rgba(255, 151, 208, 0.6);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .message::before {
+        content: "💌";
+        position: absolute;
+        top: -14px;
+        left: 16px;
+        font-size: 18px;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
+      }
+
+      .typewriter {
+        display: inline-block;
+        border-right: 2px solid var(--pink-light);
+        white-space: pre-wrap;
+        overflow: hidden;
+        animation: typing 6s steps(60, end) 0.3s 1 both,
+          blink 0.8s step-end infinite;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          border-color: transparent;
+        }
+        50% {
+          border-color: var(--pink-light);
+        }
+      }
+
+      .details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: #ffcade;
+        opacity: 0.95;
+      }
+
+      .pill {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(255, 144, 205, 0.14);
+        border: 1px solid rgba(255, 144, 205, 0.6);
+      }
+
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      button.love-btn {
+        position: relative;
+        cursor: pointer;
+        border-radius: 999px;
+        padding: 10px 18px;
+        border: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+        background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+        color: #fffafc;
+        box-shadow: 0 8px 22px rgba(255, 75, 155, 0.5),
+          0 0 18px rgba(255, 165, 215, 0.7);
+        transition: transform 0.15s ease, box-shadow 0.15s ease,
+          filter 0.15s ease;
+      }
+
+      button.love-btn::after {
+        content: "♥";
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      button.love-btn:hover {
+        transform: translateY(-2px) scale(1.02);
+        filter: brightness(1.05);
+        box-shadow: 0 14px 28px rgba(255, 75, 155, 0.7),
+          0 0 26px rgba(255, 185, 225, 0.9);
+      }
+
+      button.love-btn:active {
+        transform: translateY(0) scale(0.99);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7),
+          0 0 18px rgba(255, 130, 190, 0.8);
+      }
+
+      .secondary-btn {
+        cursor: pointer;
+        border-radius: 999px;
+        padding: 9px 16px;
+        border: 1px solid rgba(255, 182, 215, 0.7);
+        font-size: 0.85rem;
+        text-transform: lowercase;
+        letter-spacing: 0.06em;
+        background: rgba(26, 0, 19, 0.7);
+        color: #ffd9f1;
+        backdrop-filter: blur(8px);
+        transition: background 0.15s ease, transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .secondary-btn:hover {
+        background: rgba(255, 182, 215, 0.12);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+      }
+
+      /* Floating hearts in the background */
+      .heart-bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.7;
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 16px;
+        color: rgba(255, 200, 230, 0.8);
+        text-shadow: 0 0 6px rgba(255, 160, 210, 0.9),
+          0 0 16px rgba(255, 80, 150, 0.8);
+        animation: floatUp linear infinite;
+      }
+
+      @keyframes floatUp {
+        from {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-140vh) translateX(20px);
+          opacity: 0;
+        }
+      }
+
+      .footer-note {
+        margin-top: 4px;
+        font-size: 0.75rem;
+        color: rgba(255, 215, 243, 0.8);
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay"></div>
+    <div class="heart-bg" id="heart-bg"></div>
+
+    <main class="card">
+      <section class="ascii-wrapper">
+        <div class="ascii-label">Juju-дээ</div>
+        <pre id="ascii-heart" class="ascii-heart"></pre>
+        <div class="ascii-caption">
+          Оролдож оролдож хамгийн дажгүй болсон хэлбэр нь энэ шүү ♡<br />
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="tag">
+          <span class="tag-dot"></span>
+          <span>Birthday special</span>
+        </div>
+
+        <!-- ✏️ Change her name here -->
+        <h1>Төрсөн өдрийн мэнд, <span class="name">Juju</span> 💗</h1>
+
+        <p class="subtitle">
+          A tiny pink corner of the internet, made just for you.
+        </p>
+
+        <div class="message">
+          <!-- ✏️ Change the message inside this span -->
+          <span class="typewriter">
+            Бага ангийн тэр нэг хөөрхөн жаахан охин ийм том үзэсгэлэнтэй бүсгүй
+            болчих гэж. Хамгийн нандин 21 насны төрсөн өдрийн мэндийг нэг fan
+            залуугаас нь хүргэж байна аа. Хайртай шүү ♡
+          </span>
+        </div>
+
+        <div class="details">
+          <span class="pill">cake • cuddles • infinite love</span>
+          <span class="pill">today is your day</span>
+        </div>
+
+        <div class="buttons">
+          <button class="love-btn" id="love-btn">Үнсэлт илгээх</button>
+          <button class="secondary-btn" id="secondary-btn">
+            Чамд хайртай бас нэг шалтгаан
+          </button>
+        </div>
+
+        <div class="footer-note" id="reason-text">
+          чи миний хамгийн дуртай notification шүү. 💬💖
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Randomize ASCII art characters to only use j, a, n
+      (function randomizeAsciiHeart() {
+        const choices = ["j", "u"];
+        const asciiEl = document.getElementById("ascii-heart");
+        if (!asciiEl) return;
+
+        // Fixed ASCII heart template - better proportions
+        const template =
+          "    ****       ****    \n" +
+          " *********   ********* \n" +
+          " *********************** \n" +
+          "*************************\n" +
+          " *********************** \n" +
+          "  *********************  \n" +
+          "   *****************   \n" +
+          "    ***************    \n" +
+          "     *********     \n" +
+          "      *****      \n" +
+          "        *        ";
+
+        function randomizeOnce() {
+          let out = "";
+          for (const ch of template) {
+            if (ch === "*") {
+              out += choices[Math.floor(Math.random() * choices.length)];
+            } else {
+              out += ch;
+            }
+          }
+          asciiEl.textContent = out;
+        }
+
+        // Generate once on load
+        randomizeOnce();
+
+        // Optional: uncomment if you want it to animate
+        // setInterval(randomizeOnce, 2500);
+      })();
+
+      // Floating hearts generator
+      (function createHearts() {
+        const container = document.getElementById("heart-bg");
+        const heartSymbols = ["♥", "♡", "❥", "💖", "💗"];
+
+        function spawnHeart() {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.textContent =
+            heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+          const duration = 8 + Math.random() * 6; // 8–14s
+          const size = 10 + Math.random() * 14; // 10–24px
+          const left = Math.random() * 100; // vw
+          const delay = Math.random() * -duration;
+
+          heart.style.left = left + "vw";
+          heart.style.bottom = "-40px";
+          heart.style.fontSize = size + "px";
+          heart.style.animationDuration = duration + "s";
+          heart.style.animationDelay = delay + "s";
+
+          container.appendChild(heart);
+
+          // Clean up after animation
+          setTimeout(() => {
+            container.removeChild(heart);
+          }, (duration + 2) * 1000);
+        }
+
+        // Create hearts continuously
+        for (let i = 0; i < 18; i++) {
+          spawnHeart();
+        }
+        setInterval(spawnHeart, 1000);
+      })();
+
+      // Little interaction for the buttons
+      (function buttonMagic() {
+        const loveBtn = document.getElementById("love-btn");
+        const secondaryBtn = document.getElementById("secondary-btn");
+        const reasonText = document.getElementById("reason-text");
+
+        const reasons = [
+          "your presence brings calm to my soul 🌟",
+          "you make every day brighter just by being here 🌞",
+          "you are my favorite hello and hardest goodbye 💔",
+          "your kindness makes the world a better place 🌍",
+          "the way you care makes me feel truly seen 🦋",
+          "you make every moment feel magical ✨",
+          "your strength inspires me to be my best self 💪",
+          "being with you makes me feel like I belong 🌈",
+          "your heart is the most beautiful thing I know 💖",
+          "you make even the darkest days feel brighter 🌑✨",
+          "I love the way you always know exactly what I need 🫶",
+          "you’re the reason I believe in love at first sight 💘",
+          "everything about you is perfect just the way it is 💫",
+          "with you, life is an adventure I want to experience forever 🌍",
+          "your smile gives me hope for a better tomorrow 🌻",
+          "you make me feel like I’m the luckiest person alive 🍀",
+          "the way you love me is something extraordinary 🥰",
+          "just hearing your voice makes my heart skip a beat 🎶",
+          "your laughter is like music to my soul 🎼",
+          "I love the way your eyes light up when you’re happy 👀💡",
+          "you are the calm in my chaos 🌊",
+          "there’s nowhere I’d rather be than with you 💫",
+          "you make the ordinary feel extraordinary ✨",
+          "being around you makes life more vibrant 🌟",
+          "you make every day feel like a dream come true 🌙",
+          "your love is like the warm sun on a chilly day 🌞",
+          "I feel safe and loved whenever I’m with you 🏠",
+          "you are the anchor that keeps me grounded ⚓",
+          "your love is the greatest gift I’ve ever received 🎁",
+          "you have the most beautiful soul I’ve ever known 💫",
+          "I could get lost in your eyes forever 👁️✨",
+          "your laugh brightens up my darkest moments 🎤",
+          "you are the reason I wake up with a smile every morning 🌅",
+          "you make me believe in the magic of love 💖",
+          "there’s no one else I’d rather share my life with 🌍",
+          "the way you listen to me makes me feel understood 🫶",
+          "with you, I feel complete 🌙",
+          "you make my heart race with every touch ❤️",
+          "being with you is like a dream I never want to wake up from 🌙",
+          "you’re the most amazing person I’ve ever known 💖",
+          "you have a way of making everything better ✨",
+          "with you, even the quiet moments are full of meaning 🌿",
+          "your love makes me feel like I’m home, no matter where I am 🏡",
+          "I’m so grateful for every moment we spend together 🙏",
+          "you’re the best thing that’s ever happened to me 💕",
+          "your heart is a treasure I will always cherish 💎",
+          "I could listen to you talk for hours 🗣️",
+          "your voice feels like a warm hug on a cold day 🫂",
+          "every day with you is a new adventure 🌍",
+          "the way you care makes me feel truly special 💖",
+          "you make the impossible feel possible 🌠",
+          "you’re my favorite person to share every moment with ⏳",
+          "I’m forever thankful for your love and kindness 🙌",
+          "the way you smile makes my heart melt 💖",
+          "your love is all I need to feel complete 🌈",
+          "with you, life is brighter and better 🌟",
+          "I can’t imagine a life without you by my side 💕",
+          "you are the best part of my day 🌞",
+          "your warmth fills me with peace and love 🌻",
+          "I cherish every moment we spend together 💫",
+          "you make every challenge seem conquerable 💪",
+          "I love how you always know how to make me laugh 😂",
+          "you’re the reason I believe in happily ever after ✨",
+          "you are my forever person, and I’m grateful for you every day 💖",
+          "you make me feel like I’m living in a fairy tale 🌟",
+          "your heart is my safe place ❤️",
+          "being with you is the greatest joy of my life 🥰",
+          "the way you love me is like nothing else in the world 💘",
+          "you are my biggest blessing 💝",
+          "your love fills my life with so much joy 🌈",
+          "you make everything feel better with just a hug 🤗",
+          "you make every day feel worth living 🌞",
+          "I can’t get enough of your smile 😊",
+          "you’re the light that guides me through the dark 🌟",
+          "you are my everything 💖",
+          "your love makes me feel stronger every day 💪",
+          "I could never thank you enough for all the love you give me 🙏",
+          "being with you feels like the world is in perfect harmony 🌎",
+          "you’re my favorite adventure 💫",
+          "every moment with you is worth more than gold 🏅",
+          "you are the most incredible person I’ve ever met 🌟",
+          "the way you support me is everything I could ever ask for 🙌",
+          "you’re my reason to smile every single day 😄",
+          "I’m so thankful to call you mine 💖",
+          "you make my world a better place simply by existing 🌏",
+          "you’re the best part of my life, hands down 🙌",
+          "your touch is the most comforting thing I know 🤲",
+          "being with you is like living in a dream come true 💭",
+          "your love is the most beautiful thing I’ve ever known 💕",
+          "I love the way you make me feel so loved and appreciated 🥰",
+          "you’re the one person I want by my side for life 💖",
+          "I feel lucky to have you in my life 🍀",
+          "your love fills my heart with so much happiness 💖",
+          "you make life so much better, just by being you 💖",
+          "you make my heart feel lighter just by being near me 💕",
+          "your energy makes me feel alive 💫",
+          "I’m beyond grateful for every moment I spend with you 🙏",
+        ];
+        let index = 0;
+
+        loveBtn.addEventListener("click", () => {
+          // Tiny 'pop' effect handled by CSS; add a quick message change
+          reasonText.textContent = "1,000,000 холын үнсэлт илгээлээ 💋💋💋";
+          setTimeout(() => {
+            reasonText.textContent =
+              "чи миний хамгийн дуртай notification шүү. 💬💖";
+          }, 2500);
+        });
+
+        secondaryBtn.addEventListener("click", () => {
+          reasonText.textContent =
+            "reason #" + (index + 1) + ": " + reasons[index];
+          index = (index + 1) % reasons.length;
+        });
+      })();
+    </script>
+  </body>
+</html>
